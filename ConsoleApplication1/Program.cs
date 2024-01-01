@@ -17,9 +17,15 @@ namespace ConsoleApplication1
 
     class Program
     {
-        static TaskItem[] GetProjectItems(Project project, string itemType)
+        static TaskItem[] GetProjectItems(Project project, string itemType, string evaluatedIncludeName = "")
         {
-            var taskItems = project.GetItems(itemType)
+            ICollection<ProjectItem> allItems = null;
+            if (string.IsNullOrEmpty(evaluatedIncludeName)) {
+                allItems = project.GetItems(itemType);
+            } else {
+                allItems = project.GetItemsByEvaluatedInclude(evaluatedIncludeName);
+            }
+            var taskItems = allItems
                .Select(projectItem =>
                {
                    var metadata = projectItem.Metadata.ToDictionary(projectMetadata => projectMetadata.Name, projectMetadata => projectMetadata.EvaluatedValue);
@@ -39,17 +45,17 @@ namespace ConsoleApplication1
             var project = new Project(@"c:\users\blokin\documents\visual studio 2015\Projects\BizTalk Server Project1\BizTalk Server Project1\BizTalk Server Project1.btproj");
 
             var refItems = GetProjectItems(project, "Reference");
-            var schemaItems = GetProjectItems(project, "Schema");
-            var mapItems = GetProjectItems(project, "Map");
+            var schemaItems = GetProjectItems(project, "Schema", "Schema1.xsd");
+            var mapItems = GetProjectItems(project, "Map", "Map1.btm");
 
             var rootNamespace = project.GetPropertyValue("RootNamespace");
             var schemaCompiler = new SchemaCompilerTask()
             {
                 RootNamespace = rootNamespace,
-                SchemaItems = schemaItems, 
+                SchemaItems = schemaItems,
                 ProjectReferences = refItems,
                 WarningLevel = warningLevel,
-                EnableUnitTesting = enableUnitTesting, 
+                EnableUnitTesting = enableUnitTesting,
                 TreatWarningAsError = treatWarningAsError
             };
             var mapCompiler = new MapperCompilerTask()
@@ -65,7 +71,7 @@ namespace ConsoleApplication1
             if (schemaCompiler.Execute() && mapCompiler.Execute()) {
                 var filesToCompile = schemaCompiler.LastGeneratedCodeFiles
                     .Union(mapCompiler.LastGeneratedCodeFiles)
-                    .Select( fi => fi.FullName )
+                    .Select(fi => fi.FullName)
                     .ToArray();
                 CSharpCompiler csCompiler = new CSharpCompiler();
                 csCompiler.Compile(filesToCompile);

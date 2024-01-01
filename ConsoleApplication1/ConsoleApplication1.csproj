@@ -60,6 +60,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\BizTalk Server Project1\Schema2.cs">
+      <Link>Schema2.cs</Link>
+      <DependentUpon>Schema2.xsd</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="CSharpCompiler.cs" />
     <Compile Include="MapperBuildSnapshot.cs" />
     <Compile Include="MapperCompilerTask.cs" />
@@ -71,6 +76,10 @@
   <ItemGroup>
     <None Include="..\BizTalk Server Project1\Schema1.xsd">
       <Link>Schema1.xsd</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\BizTalk Server Project1\Schema2.xsd">
+      <Link>Schema2.xsd</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="App.config" />

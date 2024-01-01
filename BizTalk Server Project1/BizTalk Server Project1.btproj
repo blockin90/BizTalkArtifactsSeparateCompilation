@@ -80,6 +80,13 @@
       <SubType>Designer</SubType>
     </Map>
   </ItemGroup>
+  <ItemGroup>
+    <Schema Include="Schema2.xsd">
+      <SubType>Task</SubType>
+      <TypeName>Schema2</TypeName>
+      <Namespace>BizTalk_Server_Project1</Namespace>
+    </Schema>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\BizTalk\BizTalkC.targets" />
 </Project>
