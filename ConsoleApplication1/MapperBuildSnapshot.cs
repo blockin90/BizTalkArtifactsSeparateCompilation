@@ -23,7 +23,8 @@ namespace ConsoleApplication1
           object serviceProvider,
           List<string> projectReferences,
           List<MapBuildFileInfo> mapFilesToCompile,
-          List<SchemaBuildFileInfo> schemaFilesToCompile)
+          List<SchemaBuildFileInfo> schemaFilesToCompile
+          )
           : base(serviceProvider)
         {
             this.projectReferences = projectReferences;
@@ -61,5 +62,4 @@ namespace ConsoleApplication1
             return bizTalkFileInfoList;
         }
     }
-
 }

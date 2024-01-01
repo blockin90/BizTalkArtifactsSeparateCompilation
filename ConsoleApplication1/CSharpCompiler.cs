@@ -10,7 +10,7 @@ namespace ConsoleApplication1
     class CSharpCompiler
     {
 
-        public bool Compile(string filePath)
+        public bool Compile(params string[] filePath)
         {
             CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
             CompilerParameters parameters = new CompilerParameters();

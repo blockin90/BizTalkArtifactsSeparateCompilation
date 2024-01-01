@@ -62,11 +62,11 @@
   <ItemGroup>
     <Compile Include="CSharpCompiler.cs" />
     <Compile Include="MapperBuildSnapshot.cs" />
-    <Compile Include="MyMapperCompiler.cs" />
+    <Compile Include="MapperCompilerTask.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SchemaBuildSnapshot.cs" />
-    <Compile Include="SchemaCompiler.cs" />
+    <Compile Include="SchemaCompilerTask.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\BizTalk Server Project1\Schema1.xsd">
