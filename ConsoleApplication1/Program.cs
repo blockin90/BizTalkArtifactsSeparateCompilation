@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -68,12 +69,23 @@ namespace ConsoleApplication1
                 SchemaItems = schemaItems,
                 MapItems = mapItems
             };
-            if (schemaCompiler.Execute() && mapCompiler.Execute()) {
-                var filesToCompile = schemaCompiler.LastGeneratedCodeFiles
-                    .Union(mapCompiler.LastGeneratedCodeFiles)
+
+            Assembly schemaAssembly = null;
+
+            if (schemaCompiler.Execute()) {
+
+                CSharpCompiler csCompiler = new CSharpCompiler();
+                schemaAssembly = csCompiler.Compile(schemaCompiler.LastGeneratedCodeFiles.Select(fi=>fi.FullName).ToArray());
+            }
+            if (mapCompiler.Execute()) {
+                var filesToCompile = mapCompiler.LastGeneratedCodeFiles
                     .Select(fi => fi.FullName)
                     .ToArray();
-                CSharpCompiler csCompiler = new CSharpCompiler();
+                CSharpCompiler csCompiler = new CSharpCompiler()
+                {
+                    AdditionalReferences =new[]{ schemaAssembly.Location }
+                };
+                
                 csCompiler.Compile(filesToCompile);
 
             } else {
