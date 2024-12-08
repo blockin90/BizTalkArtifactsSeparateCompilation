@@ -13,45 +13,22 @@ namespace ConsoleApplication1
 {
     public sealed class SchemaCompilerTask : BizTalkBaseTask
     {
-        private ITaskItem[] schemaItems;
-        private ITaskItem[] projectReferences;
+        [Required]
+        public bool EnableUnitTesting { get; set; }
 
         [Required]
-        public bool EnableUnitTesting
-        {
-            get; set;
-        }
+        public ITaskItem[] SchemaItems { get; set; }
 
         [Required]
-        public ITaskItem[] SchemaItems
-        {
-            get;
-            set;
-        }
+        public ITaskItem[] ProjectReferences { get; set; }
 
         [Required]
-        public ITaskItem[] ProjectReferences
-        {
-            get; set;
-        }
+        public int WarningLevel { get; set; }
 
         [Required]
-        public int WarningLevel
-        {
-            get; set;
-        }
+        public string RootNamespace { get; set; }
 
-        [Required]
-        public string RootNamespace
-        {
-            get;
-            set;
-        }
-
-        public bool TreatWarningAsError
-        {
-            get; set;
-        }
+        public bool TreatWarningAsError { get; set; }
 
         private IEnumerable<SchemaBuildFileInfo> SchemaFiles
         {
@@ -100,11 +77,11 @@ namespace ConsoleApplication1
             BizTalkErrorCollection errors = null;
             if (schemaFilesToCompile.Count > 0) {
                 errors = new Microsoft.VisualStudio.BizTalkProject.Compiler.SchemaCompiler()
-                    .Compile((BizTalkBuildSnapshot)schemaBuildSnapshot, schemaBuildSnapshot.SchemaFilesToCompile, out _lastGeneratedCodeFiles);
+                    .Compile(schemaBuildSnapshot, schemaBuildSnapshot.SchemaFilesToCompile, out _lastGeneratedCodeFiles);
 
                 foreach (IBizTalkError error in errors) {
                     var errorType = error.get_Type();
-                    if (errorType  == BtsErrorType.Error || errorType == BtsErrorType.FatalError) {
+                    if (errorType == BtsErrorType.Error || errorType == BtsErrorType.FatalError) {
                         LastErrors.Add(error);
                     }
                 }

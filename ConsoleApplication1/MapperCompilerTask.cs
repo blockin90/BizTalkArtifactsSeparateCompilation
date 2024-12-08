@@ -17,47 +17,24 @@ namespace ConsoleApplication1
     {
 
         [Required]
-        public bool EnableUnitTesting
-        {
-            get; set;
-        }
+        public bool EnableUnitTesting { get; set; }
 
         [Required]
-        public ITaskItem[]
-        MapItems
-        {
-            get; set;
-        }
+        public ITaskItem[] MapItems { get; set; }
 
         [Required]
-        public ITaskItem[] SchemaItems
-        {
-            get; set;
-        }
+        public ITaskItem[] SchemaItems { get; set; }
 
         [Required]
-        public ITaskItem[]
-        ProjectReferences
-        {
-            get; set;
-        }
+        public ITaskItem[] ProjectReferences { get; set; }
 
         [Required]
-        public int WarningLevel
-        {
-            get; set;
-        }
+        public int WarningLevel { get; set; }
 
         [Required]
-        public string RootNamespace
-        {
-            get; set;
-        }
+        public string RootNamespace { get; set; }
 
-        public bool TreatWarningAsError
-        {
-            get; set;
-        }
+        public bool TreatWarningAsError { get; set; }
 
         private IEnumerable<MapBuildFileInfo> MapFiles
         {

@@ -28,17 +28,17 @@ namespace ConsoleApplication1
         {
             get
             {
-                foreach (SchemaBuildFileInfo schemaBuildFileInfo in this.schemaFilesToCompile)
-                    yield return (SchemaFileInfo)schemaBuildFileInfo;
+                foreach (SchemaBuildFileInfo schemaBuildFileInfo in schemaFilesToCompile)
+                    yield return schemaBuildFileInfo;
             }
         }
 
-        public override List<string> GetProjectReferences() => this.projectReferences;
+        public override List<string> GetProjectReferences() => projectReferences;
 
         public override List<BizTalkFileInfo> GetCompilableProjectFiles()
         {
             List<BizTalkFileInfo> bizTalkFileInfoList = new List<BizTalkFileInfo>();
-            foreach (BizTalkFileInfo bizTalkFileInfo in this.SchemaFilesToCompile)
+            foreach (BizTalkFileInfo bizTalkFileInfo in SchemaFilesToCompile)
                 bizTalkFileInfoList.Add(bizTalkFileInfo);
             return bizTalkFileInfoList;
         }

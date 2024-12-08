@@ -7,13 +7,11 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApplication1
+namespace BtsItemCompiler
 {
-    class CSharpCompiler
+    public static class CSharpCompiler
     {
-        public string[] AdditionalReferences { get; set; }
-
-        public Assembly Compile(params string[] filePath)
+        public static Assembly Compile( IEnumerable<string> references, params string[] filePath)
         {
             CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
             CompilerParameters parameters = new CompilerParameters();
@@ -21,12 +19,11 @@ namespace ConsoleApplication1
             // parameters.GenerateInMemory = true;
             parameters.IncludeDebugInformation = true;
             parameters.ReferencedAssemblies.Add("System.dll");
-            parameters.ReferencedAssemblies.Add("Microsoft.XLANGs.BaseTypes.dll");
-            
-            if (AdditionalReferences != null) {
-                parameters.ReferencedAssemblies.AddRange(AdditionalReferences);
-            }
-            parameters.OutputAssembly = Path.Combine( Path.GetTempPath(), Path.GetRandomFileName() +".dll");
+            parameters.ReferencedAssemblies.Add(@"D:\Develop\Microsoft Visual Studio 14.0\Common7\IDE\PublicAssemblies\Microsoft.XLANGs.BaseTypes.dll");
+                        
+           // parameters.ReferencedAssemblies.AddRange(references.ToArray());
+
+            parameters.OutputAssembly = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName() + ".dll");
 
             CompilerResults results = provider.CompileAssemblyFromFile(parameters, filePath);
 
